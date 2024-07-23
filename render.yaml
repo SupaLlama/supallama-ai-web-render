@@ -16,11 +16,8 @@ services:
       - supallama.ai
       - www.supallama.ai
     envVars:
-      - key: SUPALLAMA_AI_API_PORT
-        fromService:
-          name: supallama-ai-web-workers-fastapi
-          type: pserv
-          envVarKey: port
+      - key: SUPALLAMA_AI_API
+        value: http://supallama-ai-web-workers-fastapi:10000
       - fromGroup: supallama-frontend-env-vars
   - type: pserv 
     runtime: python
