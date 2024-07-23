@@ -47,8 +47,7 @@ services:
     runtime: python
     repo: https://github.com/SupaLlama/supallama-ai-web-workers
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "celery --app tasks worker --loglevel info --concurrency 4"
-    autoDeploy: false
+    startCommand: "celery -A main.celery worker --loglevel=info --concurrency 2"
     envVars:
       - key: CELERY_BROKER_URL
         fromService:
@@ -56,18 +55,18 @@ services:
           type: redis
           property: connectionString
       - fromGroup: supallama-backend-env-vars
-  - type: web
-    name: supallama-ai-web-workers-celery-flower
-    region: oregon
-    plan: free
-    runtime: python
-    repo: https://github.com/SupaLlama/supallama-ai-web-workers
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "celery flower --app tasks --loglevel info"
-    autoDeploy: false
-    envVars:
-      - key: CELERY_BROKER_URL
-        fromService:
-          type: redis
-          name: supallama-ai-web-redis
-          property: connectionString
+  # Flower doesn't yet support Celery 5.x
+  # - type: web
+  #   name: supallama-ai-web-workers-celery-flower
+  #   region: oregon
+  #   plan: free
+  #   runtime: python
+  #   repo: https://github.com/SupaLlama/supallama-ai-web-workers
+  #   buildCommand: "pip install -r requirements.txt"
+  #   startCommand: "celery flower -A main.celery --loglevel info"
+  #   envVars:
+  #     - key: CELERY_BROKER_URL
+  #       fromService:
+  #         type: redis
+  #         name: supallama-ai-web-redis
+  #         property: connectionString
