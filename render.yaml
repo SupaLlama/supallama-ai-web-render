@@ -21,6 +21,7 @@ services:
           name: supallama-ai-web-workers-fastapi
           type: pserv
           envVarKey: host
+      - fromGroup: supallama-frontend-env-vars
   - type: pserv 
     runtime: python
     name: supallama-ai-web-workers-fastapi
@@ -39,6 +40,7 @@ services:
           name: supallama-ai-web-redis
           type: redis
           property: connectionString
+      - fromGroup: supallama-backend-env-vars
   - type: worker
     name: supallama-ai-web-workers-celery-worker
     region: oregon
@@ -52,6 +54,7 @@ services:
           name: supallama-ai-web-redis
           type: redis
           property: connectionString
+      - fromGroup: supallama-backend-env-vars
   - type: web
     name: supallama-ai-web-workers-celery-flower
     region: oregon
