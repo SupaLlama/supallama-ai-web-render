@@ -45,6 +45,7 @@ services:
     name: supallama-ai-web-workers-celery-worker
     region: oregon
     runtime: python
+    repo: https://github.com/SupaLlama/supallama-ai-web-workers
     buildCommand: "pip install -r requirements.txt"
     startCommand: "celery --app tasks worker --loglevel info --concurrency 4"
     autoDeploy: false
@@ -60,6 +61,7 @@ services:
     region: oregon
     plan: free
     runtime: python
+    repo: https://github.com/SupaLlama/supallama-ai-web-workers
     buildCommand: "pip install -r requirements.txt"
     startCommand: "celery flower --app tasks --loglevel info"
     autoDeploy: false
