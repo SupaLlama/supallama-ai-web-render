@@ -1,6 +1,6 @@
-<h1>SupaLlama.ai Render.com Infrastructure-as-Code (IaC)</h1>
+<h2>SupaLlama.ai Render.com Infrastructure-as-Code (IaC)</h2>
 
-<h2>Click the "easy button" below to deploy this app on Render!</h2>
+<h4>Click the "easy button" below to deploy this app on Render!</h4>
 <br />
 <br />
 <a href="https://render.com/deploy?repo=https://github.com/SupaLlama/supallama-ai-web-render">
