@@ -1,0 +1,38 @@
+services:
+  - type: redis
+    name: supallama-ai-web-redis
+    region: oregon
+    plan: starter # use a plan with persistence
+    maxmemoryPolicy: noeviction # recommended policy for queues
+    ipAllowList: [] # only allow internal connections
+  - type: web
+    runtime: node
+    name: supallama-ai-web-ui
+    region: oregon
+    repo: https://github.com/SupaLlama/supallama-ai-web-ui
+    buildCommand: "npm install; npm run build" 
+    startCommand: "npm run start"
+    envVars:
+      - key: FASTAPI_URL
+        fromService:
+          name: supallama-ai-web-workers
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL
+  - type: web
+    runtime: python
+    name: supallama-ai-web-workers
+    region: oregon
+    repo: https://github.com/SupaLlama/supallama-ai-web-workers
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: CELERY_BROKER_URL
+        fromService:
+          name: supallama-ai-web-redis
+          type: redis
+          property: connectionString
+      - key: CELERY_RESULT_URL
+        fromService:
+          name: supallama-ai-web-redis
+          type: redis
+          property: connectionString
