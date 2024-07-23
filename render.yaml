@@ -19,8 +19,8 @@ services:
       - key: SUPALLAMA_AI_API
         fromService:
           name: supallama-ai-web-workers-fastapi
-          type: web
-          envVarKey: RENDER_EXTERNAL_URL
+          type: pserv
+          envVarKey: RENDER_INTERNAL_URL
   - type: pserv 
     runtime: python
     name: supallama-ai-web-workers-fastapi
