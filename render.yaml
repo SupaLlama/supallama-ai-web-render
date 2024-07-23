@@ -12,6 +12,9 @@ services:
     repo: https://github.com/SupaLlama/supallama-ai-web-ui
     buildCommand: "npm install; npm run build" 
     startCommand: "npm run start"
+    domains:
+      - supallama.ai
+      - www.supallama.ai
     envVars:
       - key: SUPALLAMA_AI_API
         fromService:
