@@ -51,6 +51,11 @@ services:
           name: supallama-ai-web-redis
           type: redis
           property: connectionString
+      - key: CELERY_RESULT_URL
+        fromService:
+          name: supallama-ai-web-redis
+          type: redis
+          property: connectionString
       - fromGroup: supallama-backend-env-vars
   # Flower doesn't yet support Celery 5.x
   # - type: web
