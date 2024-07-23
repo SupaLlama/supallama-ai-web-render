@@ -18,12 +18,12 @@ services:
     envVars:
       - key: SUPALLAMA_AI_API
         fromService:
-          name: supallama-ai-web-workers
+          name: supallama-ai-web-workers-fastapi
           type: web
           envVarKey: RENDER_EXTERNAL_URL
-  - type: web
+  - type: pserv 
     runtime: python
-    name: supallama-ai-web-workers
+    name: supallama-ai-web-workers-fastapi
     region: oregon
     repo: https://github.com/SupaLlama/supallama-ai-web-workers
     buildCommand: "pip install -r requirements.txt"
@@ -38,4 +38,31 @@ services:
         fromService:
           name: supallama-ai-web-redis
           type: redis
+          property: connectionString
+  - type: worker
+    name: supallama-ai-web-workers-celery-worker
+    region: oregon
+    runtime: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "celery --app tasks worker --loglevel info --concurrency 4"
+    autoDeploy: false
+    envVars:
+      - key: CELERY_BROKER_URL
+        fromService:
+          name: supallama-ai-web-redis
+          type: redis
+          property: connectionString
+  - type: web
+    name: supallama-ai-web-workers-celery-flower
+    region: oregon
+    plan: free
+    runtime: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "celery flower --app tasks --loglevel info"
+    autoDeploy: false
+    envVars:
+      - key: CELERY_BROKER_URL
+        fromService:
+          type: redis
+          name: supallama-ai-web-redis
           property: connectionString
