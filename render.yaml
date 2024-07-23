@@ -20,7 +20,7 @@ services:
         fromService:
           name: supallama-ai-web-workers-fastapi
           type: pserv
-          envVarKey: RENDER_INTERNAL_URL
+          envVarKey: host
   - type: pserv 
     runtime: python
     name: supallama-ai-web-workers-fastapi
