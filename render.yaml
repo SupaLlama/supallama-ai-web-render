@@ -9,7 +9,7 @@ services:
     runtime: node
     name: supallama-ai-web-ui
     region: oregon
-    repo: https://github.com/SupaLlama/supallama-ai-web-ui
+    repo: https://github.com/SupaLlama/supallama-ai-frontend 
     buildCommand: "npm install; npm run build" 
     startCommand: "npm run start"
     domains:
